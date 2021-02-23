@@ -1,5 +1,7 @@
 package android.eservices.webrequests.presentation.viewmodel;
 
+import android.eservices.webrequests.data.api.model.BookSearchResponse;
+import android.eservices.webrequests.data.repository.bookdisplay.BookDisplayDataRepository;
 import android.eservices.webrequests.presentation.bookdisplay.search.adapter.BookViewItem;
 import android.eservices.webrequests.presentation.bookdisplay.search.mapper.BookToViewModelMapper;
 
@@ -8,18 +10,21 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class BookSearchViewModel extends ViewModel {
-    //private BookDisplayRepository bookDisplayRepository;
+    private BookDisplayDataRepository bookDisplayRepository;
     private CompositeDisposable compositeDisposable;
     private BookToViewModelMapper bookToViewModelMapper;
 
-    /*public BookSearchViewModel(BookDisplayRepository bookDisplayRepository) {
+    public BookSearchViewModel(BookDisplayDataRepository bookDisplayRepository) {
         this.bookDisplayRepository = bookDisplayRepository;
         this.compositeDisposable = new CompositeDisposable();
         this.bookToViewModelMapper = new BookToViewModelMapper();
-    }*/
+    }
 
     private MutableLiveData<List<BookViewItem>> books = new MutableLiveData<List<BookViewItem>>();
     private MutableLiveData<Boolean> isDataLoading = new MutableLiveData<Boolean>();
@@ -34,7 +39,7 @@ public class BookSearchViewModel extends ViewModel {
 
     //TODO : handle loader
     public void searchBooks(String keywords) {
-        /*isDataLoading.postValue(true);
+        isDataLoading.postValue(true);
         compositeDisposable.clear();
         compositeDisposable.add(bookDisplayRepository.getBookSearchResponse(keywords)
                 .subscribeOn(Schedulers.io())
@@ -43,6 +48,7 @@ public class BookSearchViewModel extends ViewModel {
 
                     @Override
                     public void onSuccess(BookSearchResponse bookSearchResponse) {
+                        // Fait la conversion entre un book qui vient du online a ce qu'on veut en local, ce qui nous est pratique
                         books.setValue(bookToViewModelMapper.map(bookSearchResponse.getBookList()));
                     }
 
@@ -52,7 +58,7 @@ public class BookSearchViewModel extends ViewModel {
                         //Yet, do not do nothing in this app
                         System.out.println(e.toString());
                     }
-                }));*/
+                }));
     }
 
 

@@ -1,8 +1,10 @@
 package android.eservices.webrequests.presentation.bookdisplay.search.fragment;
 
 import android.eservices.webrequests.R;
+import android.eservices.webrequests.data.di.FakeDependencyInjection;
 import android.eservices.webrequests.presentation.bookdisplay.search.adapter.BookActionInterface;
 import android.eservices.webrequests.presentation.bookdisplay.search.adapter.BookAdapter;
+import android.eservices.webrequests.presentation.bookdisplay.search.adapter.BookViewItem;
 import android.eservices.webrequests.presentation.viewmodel.BookSearchViewModel;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,9 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -61,13 +66,14 @@ public class SearchFragment extends Fragment implements BookActionInterface {
     }
 
     private void registerViewModels() {
-        /*bookSearchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(BookSearchViewModel.class);
-        System.out.println("FVVM is " + bookFavoriteViewModel);
 
-        bookSearchViewModel.getBooks().observe(getViewLifecycleOwner(), new Observer<List<BookItemViewModel>>() {
+        bookSearchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(BookSearchViewModel.class);
+        // System.out.println("FVVM is " + bookFavoriteViewModel);
+
+        bookSearchViewModel.getBooks().observe(getViewLifecycleOwner(), new Observer<List<BookViewItem>>() {
             @Override
-            public void onChanged(List<BookItemViewModel> bookItemViewModelList) {
-                bookAdapter.bindViewModels(bookItemViewModelList);
+            public void onChanged(List<BookViewItem> bookViewItemList) {
+                bookAdapter.bindViewModels(bookViewItemList);
             }
         });
 
@@ -76,7 +82,9 @@ public class SearchFragment extends Fragment implements BookActionInterface {
             public void onChanged(Boolean isDataLoading) {
                 progressBar.setVisibility(isDataLoading ? View.VISIBLE : View.GONE);
             }
-        });*/
+        });
+
+
     }
 
     private void setupSearchView() {

@@ -53,6 +53,7 @@ public class FavoriteFragment extends Fragment implements BookDetailActionInterf
     }
 
     private void registerViewModels() {
+
         bookFavoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(BookFavoriteViewModel.class);
         System.out.println("FVVM is " + bookFavoriteViewModel);
 
